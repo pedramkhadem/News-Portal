@@ -8,9 +8,8 @@ function formatTags(array $tags):string
 }
 
 /**truncate text */
-function truncate(string $text , int $limit = 45) :string
+function truncate(string $text ,int $limit= 100) :string
 {
     return \Str::limit($text, $limit, '...');
 }
 
- 

@@ -15,8 +15,14 @@ class HomeController extends Controller
             'is_approved'=>1,
             'is_breaking_news'=> 1
         ])->get();
- 
-        return view('frontend.home' , compact('breakingnews'));
+
+        $heroSlider = News::with(['category'])
+        ->where('show_at_slider' , 1)
+        ->orderBy('id' , 'DESC')->take(7)
+        ->get();
+
+
+        return view('frontend.home' , compact('breakingnews' , 'heroSlider'));
 
     }
 }

@@ -34,7 +34,7 @@
                                     <div class="card__post__title">
                                         <h6>
                                             <a href="#">
-                                                {!! truncate($news->title) !!}
+                                                {!! truncate($news->title , 45) !!}
                                             </a>
                                         </h6>
                                     </div>
