@@ -21,8 +21,15 @@ class HomeController extends Controller
         ->orderBy('id' , 'DESC')->take(7)
         ->get();
 
+        $recentNews = News::with(['category'])->orderBy('id' , 'DESC')->take(6)->get();
 
-        return view('frontend.home' , compact('breakingnews' , 'heroSlider'));
+        $popularNews = News::with(['category'])
+        ->where('show_at_popular' , 1)
+        ->orderBy('updated_at' , 'DESC')
+        ->take(4)->get();
+
+
+        return view('frontend.home' , compact('breakingnews' , 'heroSlider' , 'recentNews' ,'popularNews'));
 
     }
 }
