@@ -1,8 +1,8 @@
 @extends('frontend.layouts.master')
 
 @section('content')
-<!-- Tranding news  carousel-->
-@include('frontend.home-componets.tranding-news')
+<!-- breaking news  carousel-->
+@include('frontend.home-componets.breaking-news')
 <!-- End Tranding news carousel -->
 
 <!-- Hero news section -->

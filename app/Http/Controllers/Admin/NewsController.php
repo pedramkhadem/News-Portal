@@ -79,7 +79,6 @@ class NewsController extends Controller
 
 
 
-
         toast(__('Updated Successfully!'), 'success')->width('350');
 
         return redirect()->route('admin.news.index');
