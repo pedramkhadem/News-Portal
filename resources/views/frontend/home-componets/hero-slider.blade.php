@@ -11,7 +11,7 @@
                                     <!-- Post Article -->
                                     <div class="card__post">
                                         <div class="card__post__body">
-                                            <a href="blog_details.html">
+                                            <a href="{{ route('news-detail' , $slider->slug) }}">
                                                 <img src="{{ asset($slider->image) }}" class="img-fluid" alt="">
                                             </a>
                                             <div class="card__post__content bg__post-cover">
@@ -20,7 +20,7 @@
                                                 </div>
                                                 <div class="card__post__title">
                                                     <h2>
-                                                        <a href="#">
+                                                        <a href="{{ route('news-detail' , $slider->slug) }}">
                                                             {!! truncate($slider->title) !!}
                                                         </a>
                                                     </h2>
@@ -57,7 +57,7 @@
                             @if($loop->index > 4 && $loop->index <=6)
                             <div class="card__post ">
                                 <div class="card__post__body card__post__transition">
-                                    <a href="blog_details.html">
+                                    <a href="{{ route('news-detail' , $slider->slug) }}">
                                         <img src="{{ asset($slider->image) }}" class="img-fluid" alt="">
                                     </a>
                                     <div class="card__post__content bg__post-cover">
@@ -66,14 +66,14 @@
                                         </div>
                                         <div class="card__post__title">
                                             <h5>
-                                                <a href="blog_details.html">
+                                                <a href="{{ route('news-detail' , $slider->slug) }}">
                                                     {!! truncate($slider->title , 100) !!}</a>
                                             </h5>
                                         </div>
                                         <div class="card__post__author-info">
                                             <ul class="list-inline">
                                                 <li class="list-inline-item">
-                                                    <a href="blog_details.html">
+                                                    <a href="{{ route('news-detail' , $slider->slug) }}">
                                                         {{ __('by') }} {{ $slider->auther->name}}
                                                     </a>
                                                 </li>

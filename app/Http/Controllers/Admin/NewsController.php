@@ -69,6 +69,7 @@ class NewsController extends Controller
         foreach ($tags as $tag) {
             $item = new Tag();
             $item->name = $tag;
+            $item->language = $news->language;
             $item->save();
 
             $tagIds[] = $item->id;
@@ -153,6 +154,7 @@ class NewsController extends Controller
         foreach ($tags as $tag) {
             $item = new Tag();
             $item->name = $tag;
+            $item->language = $news->language; 
             $item->save();
 
             $tagIds[] = $item->id;

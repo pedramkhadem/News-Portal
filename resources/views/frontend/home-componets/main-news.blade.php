@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-md-12 col-lg-8">
                     <div class="wrapper__list__article">
-                        <h4 class="border_section">recent post</h4>
+                        <h4 class="border_section">{{ __('recent post') }}</h4>
                     </div>
 
                         <div class="row ">
@@ -14,7 +14,7 @@
                                     <!-- Post Article -->
                                         <div class="card__post ">
                                             <div class="card__post__body card__post__transition">
-                                                <a href="blog_details.html">
+                                                <a href="{{route('news-detail' , $recent->slug) }}">
                                                     <img src="{{ asset($recent->image) }}" class="img-fluid" alt="">
                                                 </a>
                                                 <div class="card__post__content bg__post-cover">
@@ -23,14 +23,14 @@
                                                     </div>
                                                     <div class="card__post__title">
                                                         <h5>
-                                                            <a href="blog_details.html">
+                                                            <a href="{{route('news-detail' , $recent->slug) }}">
                                                                 {!! truncate($recent->title) !!}.</a>
                                                         </h5>
                                                     </div>
                                                     <div class="card__post__author-info">
                                                         <ul class="list-inline">
                                                             <li class="list-inline-item">
-                                                                <a href="blog_details.html">
+                                                                <a href="{{route('news-detail' , $recent->slug) }}">
                                                                     {{ __('by') }}{{ $recent->auther->name }}
                                                                 </a>
                                                             </li>
@@ -60,7 +60,7 @@
                                                 <!-- Post Article -->
                                                 <div class="card__post card__post-list">
                                                     <div class="image-sm">
-                                                        <a href="blog_details.html">
+                                                        <a href="{{ route('news-detail', $news->slug) }}">
                                                             <img src="{{ asset($news->image) }}" class="img-fluid" alt="">
                                                         </a>
                                                     </div>
@@ -83,7 +83,7 @@
                                                             </div>
                                                             <div class="card__post__title">
                                                                 <h6>
-                                                                    <a href="blog_details.html">
+                                                                    <a href="{{ route('news-detail', $news->slug) }}">
                                                                         {{ truncate($news->title , 40) }}
                                                                     </a>
                                                                 </h6>
@@ -104,7 +104,7 @@
                                                 <!-- Post Article -->
                                                 <div class="card__post card__post-list">
                                                     <div class="image-sm">
-                                                        <a href="blog_details.html">
+                                                        <a href="{{ route('news-detail', $news->slug) }}">
                                                             <img src="{{ asset($news->image) }}" class="img-fluid" alt="">
                                                         </a>
                                                     </div>
@@ -127,7 +127,7 @@
                                                             </div>
                                                             <div class="card__post__title">
                                                                 <h6>
-                                                                    <a href="blog_details.html">
+                                                                    <a href="{{ route('news-detail', $news->slug) }}">
                                                                         {{ truncate($news->title , 40) }}
                                                                     </a>
                                                                 </h6>
@@ -158,13 +158,13 @@
                                             {{ ++$loop->index }}
                                         </span>
                                     </div>
-                                    <a href="#" class="category">
+                                    <a href="{{ route('news-detail', $news->slug) }}" class="category">
                                         {{ $popular->category->name }}
                                     </a>
                                     <ul class="list-inline">
                                         <li class="list-inline-item">
                                             <h5>
-                                                <a href="#">
+                                                <a href="{{ route('news-detail', $news->slug) }}">
                                                     {!! truncate($popular->title , 100) !!}
                                                 </a>
                                             </h5>
