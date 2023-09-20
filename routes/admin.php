@@ -3,11 +3,12 @@
 use App\Http\Controllers\Admin\AdminAuthenticationController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\Admin\HomeSectionSettingController;
 use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\admin\NewsController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\admin\ProfileController;
-
+use App\Models\HomeSectionSetting;
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function(){
 
@@ -42,12 +43,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.' , 'middleware'=>['admin']], 
 
       /**News Route */
 
-      Route::get('fetch-news-category' , [NewsController::class , 'fetchCategory'])->name('fetch-news-category');
+    Route::get('fetch-news-category' , [NewsController::class , 'fetchCategory'])->name('fetch-news-category');
 
-      Route::get('toggle-news-status' , [NewsController::class , 'toggleNewsStatus'])->name('toggle-news-status');
-      Route::get('news-copy/{id}' , [NewsController::class , 'copyNews'])->name('news-copy');
+    Route::get('toggle-news-status' , [NewsController::class , 'toggleNewsStatus'])->name('toggle-news-status');
+    Route::get('news-copy/{id}' , [NewsController::class , 'copyNews'])->name('news-copy');
+    Route::resource('news', NewsController::class);
 
-      Route::resource('news', NewsController::class);
+    /**Home section setting Route */
+    Route::get('home-section-setting', [HomeSectionSettingController::class , 'index'])->name('home-section-setting.index');
+    Route::put('home-section-setting', [HomeSectionSettingController::class , 'update'])->name('home-section-setting.update');
+
+
+
+
+
 
 
 });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
+use App\Models\HomeSectionSetting;
 use App\Models\News;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ use PhpParser\Node\Expr\Cast\String_;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $breakingnews = News::where([
             'status'=> 1,
@@ -31,9 +32,38 @@ class HomeController extends Controller
         ->where('show_at_popular' , 1)
         ->orderBy('updated_at' , 'DESC')
         ->take(4)->get();
+        $HomeSectionSetting = HomeSectionSetting::where('language' ,'en' )->first();
 
+        $CategorySectionOne = News::where('category_id' , $HomeSectionSetting->category_section_one)
+        ->orderBy('id' , 'DESC')
+        ->take(8)
+        ->get();
 
-        return view('frontend.home' , compact('breakingnews' , 'heroSlider' , 'recentNews' ,'popularNews'));
+        $CategorySectionTwo = News::where('category_id' , $HomeSectionSetting->category_section_two)
+        ->orderBy('id' , 'DESC')
+        ->take(8)
+        ->get();
+
+        $CategorySectionThree = News::where('category_id' , $HomeSectionSetting->category_section_three)
+        ->orderBy('id' , 'DESC')
+        ->take(6)
+        ->get();
+
+        $CategorySectionFour = News::where('category_id' , $HomeSectionSetting->category_section_four)
+        ->orderBy('id' , 'DESC')
+        ->take(4)
+        ->get();
+
+        return view('frontend.home' , compact(
+            'breakingnews' ,
+             'heroSlider' ,
+              'recentNews' ,
+              'popularNews',
+              'CategorySectionOne',
+              'CategorySectionTwo',
+              'CategorySectionThree',
+              'CategorySectionFour'
+        ));
 
     }
 
