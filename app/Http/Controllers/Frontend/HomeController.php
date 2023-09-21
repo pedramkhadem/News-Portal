@@ -56,6 +56,9 @@ class HomeController extends Controller
 
         $mostViewedNews = News::orderBy('views' , 'DESC')->take(3)->get();
 
+        $mostCommenTags = $this->mostCommenTags();
+
+
 
         return view('frontend.home' , compact(
             'breakingnews' ,
@@ -67,6 +70,7 @@ class HomeController extends Controller
               'CategorySectionThree',
               'CategorySectionFour',
               'mostViewedNews',
+              'mostCommenTags',
         ));
 
     }
