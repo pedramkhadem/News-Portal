@@ -54,6 +54,9 @@ class HomeController extends Controller
         ->take(4)
         ->get();
 
+        $mostViewedNews = News::orderBy('views' , 'DESC')->take(3)->get();
+
+
         return view('frontend.home' , compact(
             'breakingnews' ,
              'heroSlider' ,
@@ -62,7 +65,8 @@ class HomeController extends Controller
               'CategorySectionOne',
               'CategorySectionTwo',
               'CategorySectionThree',
-              'CategorySectionFour'
+              'CategorySectionFour',
+              'mostViewedNews',
         ));
 
     }
