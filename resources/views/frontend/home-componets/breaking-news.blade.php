@@ -25,7 +25,7 @@
                                             </li>
                                             <li class="list-inline-item">
                                                 <span class="text-dark text-capitalize">
-                                                    {{ date('d M , Y' , strtotime($news->created_at)) }}
+                                                    {{ jalaliDate($news->created_at) }}
                                                 </span>
                                             </li>
 

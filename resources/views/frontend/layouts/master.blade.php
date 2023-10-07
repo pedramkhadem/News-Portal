@@ -36,6 +36,28 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <script>
+        $(document).ready(function(){
+            $('#site-language').on('change' , function(){
+                let languageCode = $(this).val();
+                $.ajax({
+                    method : 'GET',
+                    url : "{{ route('language') }}",
+                    data : {language_code : languageCode},
+                    success: function(data){
+                        if(data.status === 'success'){
+                            window.location.href = "{{ url('/') }}";
+                        }
+                    },
+                    error : function(data){
+                        console.error(data);
+
+                    }
+                });
+            })
+        })
+    </script>
+
     @stack('content')
 </body>
 

@@ -1,3 +1,7 @@
+@php
+    $languages = App\Models\Language::where('status' , 1)->get();
+@endphp
+
 <header class="bg-light">
     <!-- Navbar  Top-->
     <div class="topbar d-none d-sm-block">
@@ -18,23 +22,33 @@
                             </li>
                         </ul>
                         <div class="topbar-text">
-                            Friday, May 19, 2023
+                            @php
+
+                                if( getLanguage() == 'fa'){
+                                    echo verta()->format('%A , %d  %B  %Y');
+                                }
+                                else {
+                                    echo verta()->toCarbon()->format('D ,  M  j  Y');
+                                }
+
+                            @endphp
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="list-unstyled topbar-right d-flex align-items-center justify-content-end">
                         <div class="topbar_language">
-                            <select>
-                                <option>English</option>
-                                <option>Chines</option>
-                                <option>Korean</option>
+                            <select id="site-language">
+                                @foreach ($languages as $language )
+                                <option value="{{ $language->lang }}" {{ getLanguage() === $language->lang  ? 'selected' : '' }}> {{ $language->name }}</option>
+                                @endforeach
+
                             </select>
                         </div>
 
                         <ul class="topbar-link">
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="register.html">Register</a></li>
+                            <li><a href="login.html">{{ __('Login') }}</a></li>
+                            <li><a href="register.html">{{ __('Register') }}</a></li>
                         </ul>
                     </div>
                 </div>

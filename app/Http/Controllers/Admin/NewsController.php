@@ -41,7 +41,6 @@ class NewsController extends Controller
      */
     public function store(AdminNewsCreateRequest $request)
     {
-
         /** Handle Image */
         $image_path = $this->handleFileUpload($request, 'image');
         $news = new News();
@@ -50,21 +49,17 @@ class NewsController extends Controller
         $news->auther_id = Auth::guard('admin')->user()->id;
         $news->image = $image_path;
         $news->title = $request->title;
-        $news->slug = \Str::slug($request->title);
         $news->content = $request->content;
         $news->meta_title = $request->meta_title;
         $news->meta_description = $request->meta_description;
+        $news->shortlink = url("/news",\Str::Random(6));
         $news->is_breaking_news = $request->is_breaking_news == 1 ? 1 : 0;
         $news->show_at_slider = $request->show_at_slider == 1 ? 1 : 0;
         $news->show_at_popular = $request->show_at_popular == 1 ? 1 : 0;
         $news->status = $request->status == 1 ? 1 : 0;
-
         $news->save();
-
         $tags = explode(',', $request->tags);
         $tagIds = [];
-
-
 
         foreach ($tags as $tag) {
             $item = new Tag();
@@ -77,12 +72,9 @@ class NewsController extends Controller
         $news->tags()->attach($tagIds);
 
 
+        toast(__('Created Successfully!'), 'success')->width('400');
 
-
-
-        toast(__('Updated Successfully!'), 'success')->width('350');
-
-        return redirect()->route('admin.news.index');
+        return redirect()->withInput()->route('admin.news.index');
     }
 
     /**
@@ -129,12 +121,13 @@ class NewsController extends Controller
         $news->category_id =  $request->category;
         $news->auther_id = Auth::guard('admin')->user()->id;
         $news->image = !empty($image_path) ? $image_path : $news->image;
-
         $news->title = $request->title;
-        $news->slug = \Str::slug($request->title);
         $news->content = $request->content;
         $news->meta_title = $request->meta_title;
         $news->meta_description = $request->meta_description;
+
+        $news->shortlink = url("/news",\Str::Random(6));
+
         $news->is_breaking_news = $request->is_breaking_news == 1 ? 1 : 0;
         $news->show_at_slider = $request->show_at_slider == 1 ? 1 : 0;
         $news->show_at_popular = $request->show_at_popular == 1 ? 1 : 0;
@@ -154,7 +147,7 @@ class NewsController extends Controller
         foreach ($tags as $tag) {
             $item = new Tag();
             $item->name = $tag;
-            $item->language = $news->language; 
+            $item->language = $news->language;
             $item->save();
 
             $tagIds[] = $item->id;
@@ -162,7 +155,7 @@ class NewsController extends Controller
         $news->tags()->attach($tagIds);
 
 
-        toast(__('Create Successfully!'), 'success')->width('350');
+        toast(__('Updated Successfully!'), 'success')->width('400');
 
         return redirect()->route('admin.news.index');
     }

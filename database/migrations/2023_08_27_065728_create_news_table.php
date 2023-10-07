@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('content');
             $table->string('meta_title')->nullable();
             $table->string('meta_description')->nullable();
+            $table->string('shortlink');
             $table->boolean('is_breaking_news')->default(0);
             $table->boolean('show_at_slider')->default(0);
             $table->boolean('show_at_popular')->default(0);

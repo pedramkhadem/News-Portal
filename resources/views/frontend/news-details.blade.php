@@ -35,7 +35,9 @@
                     <div class="wrap__article-detail-title">
                         <h1>
                             {!! $news->title !!}
+
                         </h1>
+
 
                     </div>
                     <hr>
@@ -49,7 +51,8 @@
                             </li>
                             <li class="list-inline-item">
                                 <span class="text-dark text-capitalize ml-1">
-                                    {{ date('d M , Y' , strtotime($news->created_at)) }}
+
+                                    {{ jalaliDate($news->created_at) }}
                                 </span>
                             </li>
                             <li class="list-inline-item">
@@ -155,8 +158,35 @@
                         @endforeach
 
                     </ul>
+
+
                 </div>
                 <!-- end tags-->
+                <!-- short link -->
+
+                <div class="row">
+                    <div class="news_short_link">
+                        <div>
+                            @if ($news->shortlink )
+
+                                <div class="tooltip">
+
+                                    <div class="news_short_link">
+
+                                        <span class="icon-link-news" > <i class="fa fa-link"></i> </span>
+                                        <button value="copy" onclick="copyToClipboard('myInput')">
+                                                <a class="link_short" >
+                                                    <input type="text" value="{{ $news->shortlink }}"id="myInput">
+                                                </a>
+                                        </button>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+
+                <!-- end short link -->
 
                 <!-- authors-->
                 <!-- Profile author -->
@@ -222,7 +252,7 @@
 
                                     <div class="comment-metadata">
                                         <a href="javascript:;">
-                                            <span>{{ date('M , d , Y H:i' , strtotime($comment->created_at)) }}</span>
+                                            <span> {{ jalaliDateTime($comment->created_at) }}</span>
                                         </a>
                                     </div>
                                 </div>
@@ -260,8 +290,8 @@
 
                                             <div class="comment-metadata">
                                                 <a href="javascript:;">
-                                                    <span>{{ date('M , d , Y H:i' , strtotime($reply->created_at))
-                                                        }}</span>
+
+                                                    <span> {{ jalaliDateTime($reply->created_at) }} </span>
                                                 </a>
                                             </div>
                                         </div>
@@ -294,7 +324,8 @@
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">{{ __('Write Your Comment') }}</h5>
+                                            <h5 class="modal-title" id="exampleModalLabel">{{ __('Write Your Comment')
+                                                }}</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -343,7 +374,8 @@
                 @else
                 <div class="card my-5">
                     <div class="card-body">
-                        <h5 class="p-0">{{ __('Please') }} <a href="{{ route('login') }}">{{ __('Login') }}</a> {{ __('to comment in the post') }} !</h5>
+                        <h5 class="p-0">{{ __('Please') }} <a href="{{ route('login') }}">{{ __('Login') }}</a> {{
+                            __('to comment in the post') }} !</h5>
                     </div>
 
                 </div>
@@ -409,7 +441,7 @@
                                         </li>
                                         <li class="list-inline-item">
                                             <span>
-                                                {{ date('d M , Y' , strtotime($post->created_at)) }}
+                                                {{ jalaliDate($post->created_at) }}
                                             </span>
                                         </li>
 
@@ -467,12 +499,12 @@
                                                 <ul class="list-inline">
                                                     <li class="list-inline-item">
                                                         <span class="text-primary">
-                                                            {{ __('by') }} {{ $news->auther->name }}
+                                                            {{ __('by') }} {{ $recent->auther->name }}
                                                         </span>
                                                     </li>
                                                     <li class="list-inline-item">
                                                         <span class="text-dark text-capitalize">
-                                                            {{ date('d M , Y' , strtotime($recent->created_at)) }}
+                                                            {{ jalaliDate($recent->created_at) }}
                                                         </span>
                                                     </li>
 
@@ -511,7 +543,7 @@
                                     </li>
                                     <li class="list-inline-item">
                                         <span class="text-dark text-capitalize">
-                                            {{ date('d M ,Y' , strtotime($recent->created_at)) }}
+                                            {{ jalaliDate($recent->created_at) }}
                                         </span>
                                     </li>
 
@@ -688,4 +720,12 @@
             })
         })
 </script>
+
+<script>
+    function copyToClipboard(id) {
+        document.getElementById(id).select();
+        document.execCommand('copy');
+    }
+</script>
+
 @endpush

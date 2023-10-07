@@ -17961,9 +17961,63 @@ body.offcanvas-active {
     max-height: 250px;
 }
 
+#myInput {
+    text-align: left;
+    background: none;
+    border: none;
+    width: 100%;
+}
+
+.news_short_link a  {
+
+    color: #262626;
+    display: inline-block;
+    font: 12px Vazir;
+    position: relative;
+    width: 100%;
+}
+
+.news_short_link button a:hover {
+    border: 1px solid var(--colorPrimary);
+    border-radius: 5px;
+    color: #fff;
+    background-color:  var(--primary);
+}
+
+.news_short_link button{
+    height: 30px;
+    background: none;
+    color: #fff;
+    border: none;
+    font: 14px ;
+    padding: 0px;
+    width: 230px;
+}
 
 
+.tooltip {
+    position: relative;
+    display: inline-block;
+    opacity: 1;
+    margin: 10px 0;
+    width: 100%;
+}
 
+.share-box-news {
+    background-color: #f5f5f5;
+    line-height: 56px;
+    padding: 0 15px 0 23px;
+    margin-bottom: 11px;
+    border-radius: 5px;
+}
+
+.icon-link-news i {
+    color: #0073ff;
+    font-size: 18px;
+    margin-left: 13px;
+    margin-top: 19px;
+    /* display: block; */
+}
 
 
 

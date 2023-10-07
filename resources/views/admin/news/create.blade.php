@@ -40,8 +40,8 @@
                     <div class="form-group">
                         <label for="">{{ __('Image') }}</label>
                         <div id="image-preview" class="image-preview">
-                            <label for="image-upload" id="image-label">{{ __('admin.Choose File') }}</label>
-                            <input type="file" name="image" id="image-upload">
+                            <label for="image-upload" id="image-label">{{ __('Choose File') }}</label>
+                            <input type="file" name="image" id="image-upload" value="{{ old('image') }}">
                         </div>
                         @error('image')
                         <p class="text-danger">{{ $message }}</p>
@@ -50,7 +50,7 @@
 
                     <div class="form-group">
                         <label for="">{{ __('Ttile') }}</label>
-                        <input name="title" type="text" class="form-control" id="title">
+                        <input name="title" type="text" class="form-control" id="title" value="{{ old('title') }}">
                         @error('title')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -59,7 +59,7 @@
 
                     <div class="form-group">
                         <label for="">{{ __('Content') }}</label>
-                        <textarea name="content" class="summernote-simple"></textarea>
+                        <textarea name="content" class="summernote-simple" >{{ old('content') }}</textarea>
                         @error('content')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -68,7 +68,7 @@
                     <div class="form-group">
 
                         <label class="">{{ __('Tags') }}</label>
-                        <input name="tags" type="text" class="form-control inputtags">
+                        <input name="tags" type="text" class="form-control inputtags" value="{{ old('tags') }}">
 
                         @error('tags')
                         <p class="text-danger">{{ $message }}</p>
@@ -77,7 +77,7 @@
 
                     <div class="form-group">
                         <label for="">{{ __('Meta Title') }}</label>
-                        <input name="meta_title" type="text" class="form-control" id="meta_title">
+                        <input name="meta_title" type="text" class="form-control" id="meta_title"  value="{{ old('meta_title') }}">
                         @error('meta_title')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -85,7 +85,7 @@
 
                     <div class="form-group">
                         <label for="">{{ __('Meta Description') }}</label>
-                        <textarea name="meta_description" class="form-control"></textarea>
+                        <textarea name="meta_description" class="form-control">{{ old('meta_description') }}</textarea>
                         @error('meta_description')
                         <p class="text-danger">{{ $message }}</p>
                         @enderror
@@ -96,7 +96,7 @@
                             <div class="form-group">
                                 <div class="control-label">{{ __('Status') }}</div>
                                 <label class="custom-switch mt-2">
-                                    <input value="1" type="checkbox" name="status" class="custom-switch-input">
+                                    <input value="" type="checkbox" name="status" class="custom-switch-input">
                                     <span class="custom-switch-indicator"></span>
                                 </label>
                             </div>

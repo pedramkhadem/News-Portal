@@ -4,10 +4,30 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
+
 
 class News extends Model
 {
     use HasFactory;
+    use Sluggable;
+
+
+    /** scope for active items */
+    public function scopeActiveEntries($query)
+    {
+        return $query->where([
+            'status' => 1,
+            'is_approved' => 1
+        ]);
+    }
+
+    /** scope for check language */
+
+    public function scopeWithLocalize($query)
+    {
+        return $query->where(['language' => getLanguage()]);
+    }
 
     public function tags()
     {
@@ -27,6 +47,15 @@ class News extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
     }
 
 

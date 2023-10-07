@@ -35,7 +35,7 @@
                                                 </li>
                                                 <li class="list-inline-item">
                                                     <span>
-                                                        {{ date('d M ,Y' , strtotime($recent->created_at)) }}
+                                                        {{ jalaliDate($recent->created_at) }}
                                                     </span>
                                                 </li>
                                             </ul>
@@ -74,7 +74,7 @@
                                                     </li>
                                                     <li class="list-inline-item">
                                                         <span class="text-dark text-capitalize">
-                                                            {{ date('d M ,Y' ,strtotime($news->created_at)) }}
+                                                            {{ jalaliDate($news->created_at) }}
                                                         </span>
                                                     </li>
                                                 </ul>
@@ -117,7 +117,7 @@
                                                 </li>
                                                 <li class="list-inline-item">
                                                     <span class="text-dark text-capitalize">
-                                                        {{ date('d M ,Y' ,strtotime($news->created_at)) }}
+                                                        {{ jalaliDate($news->created_at) }}
                                                     </span>
                                                 </li>
                                             </ul>
@@ -205,7 +205,7 @@
                                     </li>
                                     <li class="list-inline-item">
                                         <span>
-                                            {{ date('M d ,Y' , strtotime($SectionOne->created_at)) }}
+                                            {{ jalaliDate($SectionOne->created_at) }}
                                         </span>
                                     </li>
 
@@ -257,7 +257,7 @@
                                     </li>
                                     <li class="list-inline-item">
                                         <span>
-                                            {{ date('M d ,Y' , strtotime($SectionTwo->created_at)) }}
+                                            {{ jalaliDate($SectionTwo->created_at) }}
                                         </span>
                                     </li>
 
@@ -309,7 +309,7 @@
                                                 </li>
                                                 <li class="list-inline-item">
                                                     <span>
-                                                        {{ date('M d , Y' , strtotime($sectionThree->created_at)) }}
+                                                        {{ jalaliDate($sectionThree->created_at) }}
                                                     </span>
                                                 </li>
 
@@ -346,7 +346,7 @@
                                             </li>
                                             <li class="list-inline-item">
                                                 <span>
-                                                    {{ date('M d , Y' , strtotime($sectionThree->created_at)) }}
+                                                    {{ jalaliDate($sctionThree->created_at) }}
                                                 </span>
                                             </li>
 
@@ -404,7 +404,7 @@
                                                 </li>
                                                 <li class="list-inline-item">
                                                     <span class="text-dark text-capitalize">
-                                                        {{ date('M d ,Y' , strtotime($sectionFour->created_at)) }}
+                                                        {{ jalaliDate($sectionFour->created_at) }}
                                                     </span>
                                                 </li>
                                             </ul>
@@ -458,7 +458,7 @@
                                     </li>
                                     <li class="list-inline-item">
                                         <span class="text-dark text-capitalize">
-                                            {{ date('M d , Y' , strtotime($news->created_at)) }}
+                                            {{ jalaliDate($news->created_at) }}
                                         </span>
                                     </li>
 
@@ -502,7 +502,7 @@
                                                 </li>
                                                 <li class="list-inline-item">
                                                     <span class="text-dark text-capitalize">
-                                                        {{ date('M d ,Y' , strtotime($news->created_at)) }}
+                                                        {{ jalaliDate($news->created_at) }}
                                                     </span>
                                                 </li>
 

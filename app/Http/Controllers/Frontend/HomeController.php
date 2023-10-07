@@ -15,46 +15,54 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        $breakingnews = News::where([
-            'status'=> 1,
-            'is_approved'=>1,
-            'is_breaking_news'=> 1
-        ])->get();
+
+        $breakingnews = News::where(['is_breaking_news'=> 1])->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(10)->get();
 
         $heroSlider = News::with(['category'])
         ->where('show_at_slider' , 1)
+        ->activeEntries()
+        ->withLocalize()
         ->orderBy('id' , 'DESC')->take(7)
         ->get();
 
-        $recentNews = News::with(['category'])->orderBy('id' , 'DESC')->take(6)->get();
+        $recentNews = News::with(['category', 'auther'])->activeEntries()->withLocalize()->orderBy('id' , 'DESC')->take(6)->get();
 
         $popularNews = News::with(['category'])
         ->where('show_at_popular' , 1)
+        ->activeEntries()
+        ->withLocalize()
         ->orderBy('updated_at' , 'DESC')
         ->take(4)->get();
-        $HomeSectionSetting = HomeSectionSetting::where('language' ,'en' )->first();
+        $HomeSectionSetting = HomeSectionSetting::where('language', getLanguage())->first();
 
         $CategorySectionOne = News::where('category_id' , $HomeSectionSetting->category_section_one)
+        ->activeEntries()
+        ->withLocalize()
         ->orderBy('id' , 'DESC')
         ->take(8)
         ->get();
 
         $CategorySectionTwo = News::where('category_id' , $HomeSectionSetting->category_section_two)
+        ->activeEntries()
+        ->withLocalize()
         ->orderBy('id' , 'DESC')
         ->take(8)
         ->get();
 
         $CategorySectionThree = News::where('category_id' , $HomeSectionSetting->category_section_three)
+        ->activeEntries()
+        ->withLocalize()
         ->orderBy('id' , 'DESC')
         ->take(6)
         ->get();
 
         $CategorySectionFour = News::where('category_id' , $HomeSectionSetting->category_section_four)
+        ->activeEntries()->withLocalize()
         ->orderBy('id' , 'DESC')
         ->take(4)
         ->get();
 
-        $mostViewedNews = News::orderBy('views' , 'DESC')->take(3)->get();
+        $mostViewedNews = News::activeEntries()->withLocalize()->orderBy('views' , 'DESC')->take(3)->get();
 
         $mostCommenTags = $this->mostCommenTags();
 
@@ -75,22 +83,30 @@ class HomeController extends Controller
 
     }
 
+    public function shortLink()
+    {
+        $news = News::where('shortlink', url()->current())->get()->first();
+
+        return $this->ShowNews($news->slug);
+
+    }
+
     public function ShowNews(string $slug)
     {
         $news = News::with(['auther' , 'tags' , 'comments'])
-        ->where('slug' , $slug)->first();
+        ->where('slug' ,$slug )
+        ->activeEntries()->withLocalize()->first();
         $this->coutView($news);
-        $recentNews = News::with(['category', 'auther'])->where('slug' ,'!=' , $news->slug)->orderBy('id' , 'DESC')->take(4)->get();
+        $recentNews = News::with(['category', 'auther'])->where('slug' ,'!=' , $news->slug)->activeEntries()->withLocalize()->orderBy('id' , 'DESC')->take(4)->get();
         $mostCommenTags = $this->mostCommenTags();
-        $nextPost = News::where('id' , '>' , $news->id)->orderBy('id' , 'asc')->first();
+        $nextPost = News::where('id' , '>' , $news->id)->activeEntries()->withLocalize()->orderBy('id' , 'asc')->first();
 
-        $previousPost = News::where('id', '<' , $news->id)->orderBy('id' , 'DESC')->first();
+        $previousPost = News::where('id', '<' , $news->id)->activeEntries()->withLocalize()->orderBy('id' , 'DESC')->first();
         $relatedPosts = News::where('slug' , '!=' ,$news->slug)
             ->where('category_id' ,$news->category_id)
+            ->activeEntries()->withLocalize()
             ->take(5)
             ->get();
-
-
 
         return view('frontend.news-details' , compact('news' , 'recentNews' , 'mostCommenTags' , 'nextPost' , 'previousPost' , 'relatedPosts'));
     }
@@ -116,7 +132,7 @@ class HomeController extends Controller
     public function mostCommenTags()
     {
         return Tag::select('name' ,\DB::raw('COUNT(*) as count'))
-            ->where('language' , 'en')
+            ->where('language' , getLanguage())
             ->groupBy('name')
             ->orderByDesc('count')
             ->take(15)
@@ -170,6 +186,8 @@ class HomeController extends Controller
         return response(['status' =>'error' , 'message'=>'Somthing Was Wrong !']);
 
     }
+
+
 
 
 }

@@ -34,7 +34,7 @@
                                                         </li>
                                                         <li class="list-inline-item">
                                                             <span>
-                                                                {{ date('d M , Y' , strtotime($slider->created_at)) }}                                                            </span>
+                                                                {{ jalaliDate($slider->created_at) }}                                                            </span>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -79,7 +79,7 @@
                                                 </li>
                                                 <li class="list-inline-item">
                                                     <span>
-                                                        {{ date('d M , Y' , strtotime($slider->created_at)) }}                                                            </span>
+                                                        {{ jalaliDate($slider->created_at) }}
                                                     </span>
                                                 </li>
                                             </ul>
