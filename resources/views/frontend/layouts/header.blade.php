@@ -1,5 +1,5 @@
 @php
-    $languages = App\Models\Language::where('status' , 1)->get();
+$languages = App\Models\Language::where('status' , 1)->get();
 @endphp
 
 <header class="bg-light">
@@ -24,12 +24,12 @@
                         <div class="topbar-text">
                             @php
 
-                                if( getLanguage() == 'fa'){
-                                    echo verta()->format('%A , %d  %B  %Y');
-                                }
-                                else {
-                                    echo verta()->toCarbon()->format('D ,  M  j  Y');
-                                }
+                            if( getLanguage() == 'fa'){
+                            echo verta()->format('%A , %d %B %Y');
+                            }
+                            else {
+                            echo verta()->toCarbon()->format('D , M j Y');
+                            }
 
                             @endphp
                         </div>
@@ -40,7 +40,8 @@
                         <div class="topbar_language">
                             <select id="site-language">
                                 @foreach ($languages as $language )
-                                <option value="{{ $language->lang }}" {{ getLanguage() === $language->lang  ? 'selected' : '' }}> {{ $language->name }}</option>
+                                <option value="{{ $language->lang }}" {{ getLanguage()===$language->lang ? 'selected' :
+                                    '' }}> {{ $language->name }}</option>
                                 @endforeach
 
                             </select>
@@ -109,19 +110,20 @@
                     <div class="top-search navigation-shadow">
                         <div class="container">
                             <div class="input-group ">
-                                <form action="#">
+                                <form action="{{ route('news')}}" method="GET">
 
                                     <div class="row no-gutters mt-3">
                                         <div class="col">
                                             <input class="form-control border-secondary border-right-0 rounded-0"
-                                                type="search" value="" placeholder="Search "
-                                                id="example-search-input4">
+                                                type="search" value="" placeholder="Search " id="example-search-input4" name="search">
                                         </div>
                                         <div class="col-auto">
-                                            <a class="btn btn-outline-secondary border-left-0 rounded-0 rounded-right"
-                                                href="/search-result.html">
-                                                <i class="fa fa-search"></i>
-                                            </a>
+
+                                            <button type="submit"
+                                                class="btn btn-outline-secondary border-left-0 rounded-0 rounded-right"><i
+                                                    class="fa fa-search"></i>
+                                            </button>
+
                                         </div>
                                     </div>
 

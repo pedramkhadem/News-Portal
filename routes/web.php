@@ -36,6 +36,7 @@ Route::get('language' , LanguageController::class)->name('language');
 /**news detail routes */
 
 Route::get('news-detail/{slug}' , [HomeController::class, 'ShowNews'])->name('news-detail');
+Route::get('news' , [HomeController::class, 'news'])->name('news');
 
 Route::get('news/{shortlink}', [HomeController::class , 'shortLink'])->name('shortlink');
 

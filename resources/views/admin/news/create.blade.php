@@ -53,7 +53,7 @@
                         <input name="title" type="text" class="form-control" id="title" value="{{ old('title') }}">
                         @error('title')
                         <p class="text-danger">{{ $message }}</p>
-                        @enderror
+                        @enderror       
                     </div>
 
 
