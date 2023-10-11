@@ -575,7 +575,7 @@
                     <h4 class="border_section">tags</h4>
                     <div class="blog-tags p-0">
                         <ul class="list-inline">
-                            @foreach ($mostCommenTags as $tag )
+                            @foreach ($mostCommonTags as $tag )
                             <li class="list-inline-item">
                                 <a href="#">
                                     #{{ $tag->name }}({{ $tag->count }})
