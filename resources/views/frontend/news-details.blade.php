@@ -465,22 +465,7 @@
             <div class="col-md-4">
                 <div class="sticky-top">
                     <aside class="wrapper__list__article ">
-                        <!-- <h4 class="border_section">Sidebar</h4> -->
-                        <div class="mb-4">
-                            <div class="widget__form-search-bar  ">
-                                <div class="row no-gutters">
-                                    <div class="col">
-                                        <input class="form-control border-secondary border-right-0 rounded-0" value=""
-                                            placeholder="Search">
-                                    </div>
-                                    <div class="col-auto">
-                                        <button class="btn btn-outline-secondary border-left-0 rounded-0 rounded-right">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <h4 class="border_section">{{ __('Sidebar') }}</h4>
                         <div class="wrapper__list__article-small">
                             @foreach ($recentNews as $recent )
                             @if($loop->index <= 2) <div class="mb-3">
@@ -620,7 +605,7 @@
                     <h4 class="border_section">{{ __('tags') }}</h4>
                     <div class="blog-tags p-0">
                         <ul class="list-inline">
-                            @foreach ($mostCommenTags as $tag )
+                            @foreach ($mostCommonTags as $tag )
                             <li class="list-inline-item">
                                 <a href="#">
                                     #{{ $tag->name }}({{ $tag->count }})

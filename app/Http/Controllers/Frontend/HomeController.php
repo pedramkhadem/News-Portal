@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Comment;
 use App\Models\HomeSectionSetting;
 use App\Models\News;
@@ -64,7 +65,7 @@ class HomeController extends Controller
 
         $mostViewedNews = News::activeEntries()->withLocalize()->orderBy('views' , 'DESC')->take(3)->get();
 
-        $mostCommenTags = $this->mostCommenTags();
+        $mostCommonTags = $this->mostCommonTags();
 
 
 
@@ -78,7 +79,7 @@ class HomeController extends Controller
               'CategorySectionThree',
               'CategorySectionFour',
               'mostViewedNews',
-              'mostCommenTags',
+              'mostCommonTags',
         ));
 
     }
@@ -98,7 +99,7 @@ class HomeController extends Controller
         ->activeEntries()->withLocalize()->first();
         $this->coutView($news);
         $recentNews = News::with(['category', 'auther'])->where('slug' ,'!=' , $news->slug)->activeEntries()->withLocalize()->orderBy('id' , 'DESC')->take(4)->get();
-        $mostCommenTags = $this->mostCommenTags();
+        $mostCommonTags = $this->mostCommonTags();
         $nextPost = News::where('id' , '>' , $news->id)->activeEntries()->withLocalize()->orderBy('id' , 'asc')->first();
 
         $previousPost = News::where('id', '<' , $news->id)->activeEntries()->withLocalize()->orderBy('id' , 'DESC')->first();
@@ -108,22 +109,53 @@ class HomeController extends Controller
             ->take(5)
             ->get();
 
-        return view('frontend.news-details' , compact('news' , 'recentNews' , 'mostCommenTags' , 'nextPost' , 'previousPost' , 'relatedPosts'));
+        return view('frontend.news-details' , compact('news' , 'recentNews' , 'mostCommonTags' , 'nextPost' , 'previousPost' , 'relatedPosts'));
     }
 
     public function news(Request $request)
     {
-        if($request->has('search')){
-            $news = News::where(function($query) use ($request){
-                $query->where('title' , 'like' , '%'.$request->search.'%')
-                ->orWhere('content' , 'like' , '%'.$request->search.'%');
-            })->orWhereHas('category',function($query) use ($request){
-                $query->where('name' , 'like' ,'%'.$request->search.'%');
-            })->activeEntries()->withLocalize()->paginate(15);
+        $news = News::query();
 
-        }
+        // show tags
+        $news->when($request->has('tag') , function($query) use ($request){
+            $query->whereHas('tags', function($query) use ($request){
+                $query->where('name' , $request->tag );
+            });
 
-        return view('frontend.news' ,compact('news'));
+        });
+
+        $news->when($request->has('category') && !empty($request->category), function($query) use ($request) {
+            $query->whereHas('category', function($query) use ($request) {
+                $query->where('slug', $request->category);
+            });
+        });
+
+
+
+
+
+
+        // show search resualt
+        $news->when($request->has('search'), function($query) use ($request) {
+            $query->where(function($query) use ($request){
+                $query->where('title', 'like','%'.$request->search.'%')
+                    ->orWhere('content', 'like','%'.$request->search.'%');
+            })->orWhereHas('category', function($query) use ($request){
+                $query->where('name', 'like','%'.$request->search.'%');
+            });
+        });
+
+
+        $recentNews = News::with(['category', 'auther'])
+            ->activeEntries()->withLocalize()->orderBy('id', 'DESC')->take(4)->get();
+        $mostCommonTags = $this->mostCommonTags();
+
+        $categories = Category::where(['status' => 1, 'language' => getLanguage()])->get();
+
+        $news = $news->activeEntries()->withLocalize()->paginate(20);
+
+
+        return view('frontend.news' ,compact('news', 'recentNews', 'mostCommonTags' , 'categories'));
     }
 
     public function coutView($news)
@@ -144,7 +176,7 @@ class HomeController extends Controller
 
     }
 
-    public function mostCommenTags()
+    public function mostCommonTags()
     {
         return Tag::select('name' ,\DB::raw('COUNT(*) as count'))
             ->where('language' , getLanguage())
