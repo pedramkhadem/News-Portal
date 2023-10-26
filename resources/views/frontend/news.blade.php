@@ -52,7 +52,7 @@
 
                 <aside class="wrapper__list__article ">
                     @if(request()->has('category'))
-                    <h4 class="border_section">{{ __('Category') }}: {{ request()->category }}</h4>
+                            <h4 class="border_section">{{ __('Category') }}: {{ request()->category }}</h4>
                     @endif
 
                     <div class="row">

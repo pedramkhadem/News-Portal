@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\User\UserAuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+
+Route::post('user/login', [UserAuthController::class, 'login']);
+
+Route::middleware('auth:sanctum' ,'type.user')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+
+Route::group(['prefix' => 'user' , 'middleware'=>['auth:sanctum', 'type.user']], function(){
+
+    Route::post('logout' , [UserAuthController::class , 'logout']);
+    //create new user
+    Route::post('register' , [UserAuthController::class , 'register']);
+    //update user
+    Route::put('update/{user}' , [UserAuthController::class, 'update']);
+
+
+
+
 });
