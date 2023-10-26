@@ -121,19 +121,15 @@ class HomeController extends Controller
             $query->whereHas('tags', function($query) use ($request){
                 $query->where('name' , $request->tag );
             });
-
+            
         });
 
+        // show category
         $news->when($request->has('category') && !empty($request->category), function($query) use ($request) {
             $query->whereHas('category', function($query) use ($request) {
                 $query->where('slug', $request->category);
             });
         });
-
-
-
-
-
 
         // show search resualt
         $news->when($request->has('search'), function($query) use ($request) {
