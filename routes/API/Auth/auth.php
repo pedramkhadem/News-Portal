@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 // */
 
 
-/
+
 
     Route::post('admin/login', [AdminAuthController::class, 'login']);
 
