@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\Admin\AdminAuthController;
-
+use App\Http\Controllers\API\Admin\AdminCatController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,9 +26,14 @@ use Illuminate\Support\Facades\Route;
     });
 
     Route::group(['prefix' => 'admin' , 'middleware'=>['auth:sanctum', 'type.admin']], function(){
-
+        //logout admin
         Route::post('logout' , [AdminAuthController::class , 'logout']);
+
+        //update admin profile
         Route::put('update/{admin}' , [AdminAuthController::class , 'update']);
+
+        //index categories
+        Route::apiResource('category' , AdminCatController::class);
 
 
     });
