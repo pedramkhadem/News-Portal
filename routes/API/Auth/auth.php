@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\Admin\AdminAuthController;
 use App\Http\Controllers\API\Admin\AdminCatController;
+use App\Http\Controllers\API\Admin\AdminLangController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,8 @@ use Illuminate\Support\Facades\Route;
 
         //index categories
         Route::apiResource('category' , AdminCatController::class);
+        Route::apiResource('language', AdminLangController::class);
 
+        
 
     });
