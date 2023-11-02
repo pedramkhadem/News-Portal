@@ -46,7 +46,7 @@ use Illuminate\Support\Facades\Route;
         //Image handler
         Route::post('news/image',  [AdminImageController::class , 'image']);
 
-        // Route::apiResource('section' , AdminHomeSectionController::class);
+        Route::apiResource('section' , AdminHomeSectionController::class);
 
 
     });
