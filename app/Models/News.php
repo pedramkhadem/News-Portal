@@ -22,6 +22,8 @@ class News extends Model
         ]);
     }
 
+    protected $fillable = ['title' , 'language' , 'category_id', 'image', 'slug' , 'content', 'meta_title' , 'meta_description'  ];
+
     /** scope for check language */
 
     public function scopeWithLocalize($query)
@@ -53,7 +55,9 @@ class News extends Model
     {
         return [
             'slug' => [
-                'source' => 'title'
+                'source' => 'title',
+                'onUpdate' => true
+
             ]
         ];
     }

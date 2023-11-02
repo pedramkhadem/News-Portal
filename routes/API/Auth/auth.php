@@ -2,7 +2,11 @@
 
 use App\Http\Controllers\API\Admin\AdminAuthController;
 use App\Http\Controllers\API\Admin\AdminCatController;
+use App\Http\Controllers\API\Admin\AdminHomeSectionController;
+use App\Http\Controllers\API\Admin\AdminImageController;
 use App\Http\Controllers\API\Admin\AdminLangController;
+use App\Http\Controllers\API\Admin\AdminNewsController;
+use App\Http\Resources\Admin\AdminNewsResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,10 +37,16 @@ use Illuminate\Support\Facades\Route;
         //update admin profile
         Route::put('update/{admin}' , [AdminAuthController::class , 'update']);
 
-        //index categories
+        //categories Route
         Route::apiResource('category' , AdminCatController::class);
+        //Language Route
         Route::apiResource('language', AdminLangController::class);
+        //News Route
+        Route::apiResource('news' , AdminNewsController::class);
+        //Image handler
+        Route::post('news/image',  [AdminImageController::class , 'image']);
 
-        
+        // Route::apiResource('section' , AdminHomeSectionController::class);
+
 
     });

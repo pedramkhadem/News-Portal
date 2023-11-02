@@ -44,6 +44,10 @@ class AdminAuthController extends Controller
             'message' => 'Admin Successfully logged out',
         ]);
     }
+
+
+
+    
     public function update(Request $request , Admin  $admin)
     {
         $validate = Validator::make($request->all() , [
@@ -67,3 +71,4 @@ class AdminAuthController extends Controller
 
     }
 }
+

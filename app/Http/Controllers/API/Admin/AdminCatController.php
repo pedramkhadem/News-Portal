@@ -29,6 +29,8 @@ class AdminCatController extends Controller
             'status'=>$request->status
         ]);
 
+
+
         return new AdminCatResource($category);
 
 

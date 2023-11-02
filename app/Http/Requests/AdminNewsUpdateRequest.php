@@ -21,13 +21,13 @@ class AdminNewsUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $newsId = $this->route('news');
+        // $newsId = $this->route('news');
         return [
 
             'language' =>['required'],
             'category'=>['required'],
             'image'=>['nullable' , 'max:3000' , 'image'],
-            'title'=>['required' , 'max:255' , 'unique:news,title,'.$newsId],
+            'title'=>['required' , 'max:255' ],
             'content'=>['required'],
             'tags'=>['required'],
             'meta_title' =>['required' , 'max:255'],

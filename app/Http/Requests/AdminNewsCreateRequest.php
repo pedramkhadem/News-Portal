@@ -4,6 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
+
 class AdminNewsCreateRequest extends FormRequest
 {
     /**
@@ -24,7 +27,7 @@ class AdminNewsCreateRequest extends FormRequest
         return [
             'language' =>['required'],
             'category'=>['required'],
-            'image'=>['required' , 'max:3000' , 'image'],
+            'image'=>['required' , 'max:3000' ],
             'title'=>['required' , 'max:255' , 'unique:news,title'],
             'content'=>['required'],
             'tags'=>['required'],
@@ -37,5 +40,17 @@ class AdminNewsCreateRequest extends FormRequest
 
 
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = $validator->errors();
+
+        $response = response()->json([
+            'message' => 'Invalid data send',
+            'details' => $errors->messages(),
+        ], 422);
+
+        throw new HttpResponseException($response);
     }
 }
