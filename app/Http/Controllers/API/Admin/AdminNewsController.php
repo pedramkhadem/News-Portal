@@ -58,13 +58,9 @@ class AdminNewsController extends Controller
 
         foreach ($tags as $tag) {
 
-            $new_tag = Tag::firstOrCreate(['name'=>$tag]);
-            if($new_tag)
-            {
-                $new_tag->language=$request->language;
-                $new_tag->save();
+            $new_tag = Tag::firstOrCreate(['name'=>$tag,'language'=>$request->language]);
+
                 $tagIds[] =  $new_tag->id;
-            }
         }
 
 
@@ -122,13 +118,10 @@ class AdminNewsController extends Controller
         foreach ($tags as $tag) {
 
 
-            $new_tag = Tag::firstOrCreate(['name'=>$tag]);
-            if($new_tag)
-            {
-                $new_tag->language=$request->language;
-                $new_tag->save();
+            $new_tag = Tag::firstOrCreate(['name'=>$tag,'language'=>$request->language]);
+
                 $tagIds[] =  $new_tag->id;
-            }
+
         }
 
         $news->tags()->sync($tagIds);
