@@ -59,12 +59,14 @@ class AdminNewsController extends Controller
 
 
         foreach ($tags as $tag) {
-            $item = new Tag();
-            $item->name = $tag;
-            $item->language = $news->language;
-            $item->save();
 
-            $tagIds[] = $item->id;
+            $new_tag = Tag::firstOrCreate(['name'=>$tag]);
+            if($new_tag)
+            {
+                $new_tag->language=$request->language;
+                $new_tag->save();
+                $tagIds[] =  $new_tag->id;
+            }
         }
 
 
@@ -125,20 +127,16 @@ class AdminNewsController extends Controller
         $tags = explode(',', $request->tags);
         $tagIds = [];
 
-        /**delete previos tags */
-        $news->tags()->delete();
-
-        /**detach tags from pivot  tables*/
-        $news->tags()->detach($news->tags);
-
-
         foreach ($tags as $tag) {
-            $item = new Tag();
-            $item->name = $tag;
-            $item->language = $news->language;
-            $item->save();
 
-            $tagIds[] = $item->id;
+
+            $new_tag = Tag::firstOrCreate(['name'=>$tag]);
+            if($new_tag)
+            {
+                $new_tag->language=$request->language;
+                $new_tag->save();
+                $tagIds[] =  $new_tag->id;
+            }
         }
 
         $news->tags()->sync($tagIds);
