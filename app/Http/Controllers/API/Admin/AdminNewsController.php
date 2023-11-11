@@ -9,6 +9,7 @@ use App\Http\Resources\Admin\AdminNewsResource;
 use App\Models\News;
 use App\Models\Tag;
 use App\Traits\FileUploadTrait;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
@@ -33,11 +34,8 @@ class AdminNewsController extends Controller
      */
     public function store(AdminNewsCreateRequest $request)
     {
-        /** Handle Image */
 
-            // $request->safe()->all();
-
-        // $image_path = $this->handleFileUpload($request, 'image');
+        $request->safe()->all();
         $news = new News();
         $news->language = $request->language;
         $news->category_id =  $request->category;
@@ -91,7 +89,7 @@ class AdminNewsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request , News $news)
+    public function update(FormRequest $request , News $news)
     {
 
         if($news->auther_id != auth()->id())
@@ -100,14 +98,8 @@ class AdminNewsController extends Controller
                 'message'=>'error you dont have permision',
             ]);
         }
-        $request->validate([
-            'title' => 'required',
-            'language' => 'required',
-            'content'=>'required' ,
-            'meta_title' =>'required',
-            "meta_description"=> 'required',
-            'image'=>'sometimes|max:3000|nullable',
-        ]);
+
+        $request->safe()->all();
 
         $news->language = $request->language;
         $news->category_id =  $request->category;
@@ -122,7 +114,7 @@ class AdminNewsController extends Controller
         $news->show_at_slider = $request->show_at_slider == 1 ? 1 : 0;
         $news->show_at_popular = $request->show_at_popular == 1 ? 1 : 0;
         $news->status = $request->status == 1 ? 1 : 0;
-        $news->update();
+        $news->save();
 
         $tags = explode(',', $request->tags);
         $tagIds = [];
