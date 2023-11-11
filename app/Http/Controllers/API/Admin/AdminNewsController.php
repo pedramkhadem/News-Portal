@@ -19,9 +19,13 @@ class AdminNewsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return AdminNewsResource::collection(News::with('category')->paginate(10));
+
+
+        $result = News::where('language' ,request('lang' , 'en'))->where('auther_id', auth()->id())->with('category')->paginate(10);
+
+        return AdminNewsResource::collection($result);
     }
 
     /**
@@ -31,6 +35,7 @@ class AdminNewsController extends Controller
     {
         /** Handle Image */
 
+            // $request->safe()->all();
 
         // $image_path = $this->handleFileUpload($request, 'image');
         $news = new News();
@@ -48,8 +53,10 @@ class AdminNewsController extends Controller
         $news->show_at_popular = $request->show_at_popular == 1 ? 1 : 0;
         $news->status = $request->status == 1 ? 1 : 0;
         $news->save();
+
         $tags = explode(',', $request->tags);
         $tagIds = [];
+
 
         foreach ($tags as $tag) {
             $item = new Tag();
@@ -59,7 +66,10 @@ class AdminNewsController extends Controller
 
             $tagIds[] = $item->id;
         }
-        $news->tags()->attach($tagIds);
+
+
+        $news->tags()->sync($tagIds);
+
 
 
 
@@ -82,25 +92,56 @@ class AdminNewsController extends Controller
     public function update(Request $request , News $news)
     {
 
-        
-        $validate = Validator::make($request->all(), [
+        if($news->auther_id != auth()->id())
+        {
+            return response()->json([
+                'message'=>'error you dont have permision',
+            ]);
+        }
+        $request->validate([
             'title' => 'required',
             'language' => 'required',
             'content'=>'required' ,
             'meta_title' =>'required',
             "meta_description"=> 'required',
-            'image'=>'required|max:3000',
-
+            'image'=>'sometimes|max:3000|nullable',
         ]);
 
-        if($validate->fails())
-        {
-            return response()->json([
-                'message' => $validate->errors()->first(),
-            ]);
+        $news->language = $request->language;
+        $news->category_id =  $request->category;
+        $news->auther_id = Auth::user()->id;
+        $news->image = !empty($request->image) ? $request->image: $news->image;
+        $news->title = $request->title;
+        $news->content = $request->content;
+        $news->meta_title = $request->meta_title;
+        $news->meta_description = $request->meta_description;
+
+        $news->is_breaking_news = $request->is_breaking_news == 1 ? 1 : 0;
+        $news->show_at_slider = $request->show_at_slider == 1 ? 1 : 0;
+        $news->show_at_popular = $request->show_at_popular == 1 ? 1 : 0;
+        $news->status = $request->status == 1 ? 1 : 0;
+        $news->update();
+
+        $tags = explode(',', $request->tags);
+        $tagIds = [];
+
+        /**delete previos tags */
+        $news->tags()->delete();
+
+        /**detach tags from pivot  tables*/
+        $news->tags()->detach($news->tags);
+
+
+        foreach ($tags as $tag) {
+            $item = new Tag();
+            $item->name = $tag;
+            $item->language = $news->language;
+            $item->save();
+
+            $tagIds[] = $item->id;
         }
 
-        $news->update($request->all());
+        $news->tags()->sync($tagIds);
 
         return new AdminNewsResource($news);
 
@@ -111,6 +152,14 @@ class AdminNewsController extends Controller
      */
     public function destroy(News $news)
     {
+        if($news->auther_id != auth()->id())
+        {
+            return response()->json([
+                'msg'=>'error',
+            ]);
+        }
+
+        $this->deleteFile($news->image);
         $news->delete();
         return response()->json([
             'message'=>'News was deleted'

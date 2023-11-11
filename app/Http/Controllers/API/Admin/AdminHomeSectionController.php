@@ -14,9 +14,10 @@ class AdminHomeSectionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return AdminHomeSectionResource::collection(HomeSectionSetting::all());
+        $result = HomeSectionSetting::where('language' , request('lang' , 'en'))->get();
+        return AdminHomeSectionResource::collection($result);
     }
 
 

@@ -25,8 +25,8 @@ class AdminNewsCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'language' =>['required'],
-            'category'=>['required'],
+            'language' =>['required' , 'exists:languages,lang'],
+            'category'=>['required' , 'exists:categories,id'],
             'image'=>['required' , 'max:3000' ],
             'title'=>['required' , 'max:255' , 'unique:news,title'],
             'content'=>['required'],

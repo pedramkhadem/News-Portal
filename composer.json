@@ -11,6 +11,7 @@
         "hekmatinasser/verta": "^8.3",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
+        "laravel/telescope": "^4.17",
         "laravel/tinker": "^2.8",
         "realrashid/sweet-alert": "^7.1"
     },
